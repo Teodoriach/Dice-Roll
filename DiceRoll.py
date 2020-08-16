@@ -4,7 +4,7 @@ import re
 
 
 def main(argv):
-    if len(argv) > 2:
+    if len(argv) > 2 or len(argv) == 1:
         usage(0)
     arg = argv[1]
     check(arg)
@@ -13,13 +13,13 @@ def main(argv):
     dice_number = int(dices[0])
     dice_sides = int(dices[1])
     try:
-        modificator = int(dices[2])
-    except:
-        modificator = 0
+        modifier = int(dices[2])
+    except IndexError:
+        modifier = 0
     rolls = []
-    for result in dice_roll(dice_number, dice_sides, modificator):
+    for result in dice_roll(dice_number, dice_sides, modifier):
         rolls.append(result)
-    prntstr ='Your rolls: ' + '{}, '*dice_number + '\nSum of your rolls is: {}'
+    prntstr = 'Your rolls: ' + '{}, '*dice_number + '\nSum of your rolls is: {}'
     print(prntstr.format(*rolls, sum(rolls)))
 
 
@@ -43,17 +43,17 @@ def split(s):
 def dice_roll(dices, sides, mod=0):  # generator
     i = 0
     while i < dices:
-        i+=1
+        i += 1
         x = random.randint(1, sides) + mod
         yield x
 
 
-def usage(x = 0):
+def usage(x=0):
     if x == 0:
         print("Usage example: DiceRoll.py 2d4+1")
         sys.exit(0)
     if x == 1:
-        print("Number of dices, sides and modificator must be INT.\nUsage example: DiceRoll.py 2d4+1")
+        print("Number of dices, sides and modifier must be INT.\nUsage example: DiceRoll.py 2d4+1")
         sys.exit(0)
 
 
